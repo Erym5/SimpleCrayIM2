@@ -9,10 +9,14 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 @ChannelHandler.Sharable
 @Service("soulTest1ClientHandler")
 public class SoulTest1ClientHandler extends ChannelInboundHandlerAdapter {
+    //心跳的时间间隔，单位为s
+    private static final int HEARTBEAT_INTERVAL = 50;
 
     //在Handler被加入到Pipeline时，开始发送心跳
     @Override
@@ -21,19 +25,25 @@ public class SoulTest1ClientHandler extends ChannelInboundHandlerAdapter {
 
         ProtoMsg.Message message =
                 NotificationMsgBuilder.buildNotification("疯狂创客圈 Netty 灵魂实验 1 " + ctx.channel().id());
-        //发送一次消息
-        sendMessage(ctx, message);
+        //发送心跳报文
+        clientHeartBeat(ctx, message);
     }
 
-    //连接成功后，发送一次消息
-    public void sendMessage(ChannelHandlerContext ctx,
-                            ProtoMsg.Message anyMsg) {
-        if (ctx.channel().isActive()) {
-            log.info("  发送消息 to server");
-            ctx.writeAndFlush(anyMsg);
-        }
-    }
+    //使用定时器，发送心跳报文
+    public void clientHeartBeat(ChannelHandlerContext ctx,
+                                ProtoMsg.Message  heartbeatMsg) {
+        ctx.executor().schedule(() -> {
 
+            if (ctx.channel().isActive()) {
+                log.info(" 发送 HEART_BEAT  消息 to server");
+                ctx.writeAndFlush(heartbeatMsg);
+
+                //递归调用，发送下一次的心跳
+                clientHeartBeat(ctx, heartbeatMsg);
+            }
+
+        }, HEARTBEAT_INTERVAL, TimeUnit.SECONDS);
+    }
     /**
      * 接受到服务器的心跳回写
      */
