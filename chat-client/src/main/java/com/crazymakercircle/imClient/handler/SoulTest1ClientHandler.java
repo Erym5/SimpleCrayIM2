@@ -16,7 +16,7 @@ public class SoulTest1ClientHandler extends ChannelInboundHandlerAdapter {
 
     //在Handler被加入到Pipeline时，开始发送心跳
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx)
+    public void channelActive(ChannelHandlerContext ctx)
             throws Exception {
 
         ProtoMsg.Message message =

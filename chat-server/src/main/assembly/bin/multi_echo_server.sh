@@ -4,12 +4,12 @@
 SERVER_PORT=7788
 
 
-PRO_NAME="cloud-config-1.0-SNAPSHOT"
+PRO_NAME="chat-server-1.0-SNAPSHOT"
 JAR_NAME="${PRO_NAME}.jar"
 WORK_PATH="/work/${PRO_NAME}"
 MAIN_CLASS="com.crazymakercircle.imServer.server.ServerApplication"
-JVM="-server -Xms64m -Xmx256m"
-export log_cloud_config_path=/work/logs/${PRO_NAME}
+JVM="-server -Xms256m -Xmx1024m"
+export log_chart_server_application_path=/work/logs/${PRO_NAME}
 
 LOG="${WORK_PATH}/logs/console.log"
 APPLICATION_CONFIG="-Dserver.port=${SERVER_PORT} "

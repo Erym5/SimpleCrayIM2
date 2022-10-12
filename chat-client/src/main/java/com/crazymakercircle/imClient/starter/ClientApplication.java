@@ -33,6 +33,7 @@ public class ClientApplication {
 
         //  jvm选项    -Xms2G -Xmx8G
         //  命令 参数   soultest1 10 1000000 cdh1
+        //  命令 参数   soultest1 10 10 localhost
         //  第一个参数为 soultest1， 启动百万连接 netty 灵魂测试客户端
 
         if (args.length > 0 && (args[0] != null && args[0].equalsIgnoreCase("soultest1"))) {
@@ -41,6 +42,9 @@ public class ClientApplication {
             startSoultest1Client(context, args);
 
         } else if (args.length > 0 && (args[0] != null && args[0].equalsIgnoreCase("multiEcho"))) {
+
+
+
             // 第一个参数为 multiEcho，启动低速消费客户端  ，服务端回复 N倍的数据， 耗光客户端的缓冲区
             // 启动低速消费客户端
             startLowSpeedClient(context, args);

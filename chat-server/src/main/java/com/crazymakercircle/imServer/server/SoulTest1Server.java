@@ -35,7 +35,7 @@ public class SoulTest1Server {
     private SoulTest1ServerHandler soulTest1ServerHandler;
 
 
-    //请求的时间间隔，单位为ms
+    //端口数量
     public static long serverPortCount = 10;
 
 

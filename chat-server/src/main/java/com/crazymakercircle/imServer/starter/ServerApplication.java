@@ -36,10 +36,21 @@ public class ServerApplication {
         if (args.length > 0 &&
                 (args[0] != null && args[0].equalsIgnoreCase("soultest1"))) {
             //启动 灵魂测试1  服务器
+
+            //  jvm选项    -Xms2G -Xmx8G
+            //  命令 参数   soultest1 10 1000000 cdh1
+            //  第一个参数为 soultest1， 启动百万连接 netty 灵魂测试客户端
+
             startSoultest1Server(context, args);
 
         } else if (args.length > 0 &&
                 (args[0] != null && args[0].equalsIgnoreCase("multiEcho"))) {
+
+            //  jvm选项    -Xms2G -Xmx8G
+            //  命令 参数   multiEcho  2
+            // 第二个参数为重复回复的次数
+
+
             //启动重复回显的服务器
             startMultiEchoServer(context, args);
         } else {
