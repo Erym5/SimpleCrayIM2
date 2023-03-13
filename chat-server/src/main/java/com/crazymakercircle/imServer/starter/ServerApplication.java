@@ -3,11 +3,11 @@ package com.crazymakercircle.imServer.starter;
 import com.crazymakercircle.imServer.handler.MultiEchoHandler;
 import com.crazymakercircle.imServer.handler.SoulTest1ServerHandler;
 import com.crazymakercircle.imServer.server.ChatServer;
+import com.crazymakercircle.imServer.server.EchoIOUringServer;
 import com.crazymakercircle.imServer.server.MultiEchoServer;
 import com.crazymakercircle.imServer.server.SoulTest1Server;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
 
 //自动加载配置信息
 @Configuration
-@EnableAutoConfiguration
 //使包路径下带有@Value的注解自动注入
 //使包路径下带有@Autowired的类可以自动注入
 @ComponentScan("com.crazymakercircle.imServer")
@@ -53,6 +52,16 @@ public class ServerApplication {
 
             //启动重复回显的服务器
             startMultiEchoServer(context, args);
+        } else if (args.length > 0 &&
+                (args[0] != null && args[0].equalsIgnoreCase("ioUring"))) {
+
+            //  jvm选项    -Xms2G -Xmx8G
+            //  命令 参数   ioUring
+            // 第二个参数为重复回复的次数
+
+
+            //启动重复回显的服务器
+            startIoUringServer(context);
         } else {
             //启动聊天服务器
             startChatServer(context);
@@ -91,8 +100,14 @@ public class ServerApplication {
 
     //启动聊天服务器
     private static void startChatServer(ApplicationContext context) {
-        ChatServer nettyServer =  context.getBean(ChatServer.class);
+        ChatServer nettyServer = context.getBean(ChatServer.class);
         nettyServer.run();
+    }
+
+    //启动IoUring 服务器
+    private static void startIoUringServer(ApplicationContext context) {
+        EchoIOUringServer server = context.getBean(EchoIOUringServer.class);
+        server.run();
     }
 
 

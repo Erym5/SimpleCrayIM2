@@ -24,7 +24,7 @@
         <springboot>2.1.12.RELEASE</springboot>
 
 <!--        <netty.version>4.0.33.Final</netty.version>-->
-        <netty.version>4.1.30.Final</netty.version>
+        <netty.version>4.1.50.Final</netty.version>
         <protobuf.version>3.6.1</protobuf.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
